@@ -2,19 +2,21 @@
 
 echo 'Running post-install..'
 
-echo 'Patching FreeBSD..'
-freebsd-update fetch install > /dev/null
+echo 'Setting up pkg'
+if [ ! -f /usr/local/sbin/pkg ]; then
+	env ASSUME_ALWAYS_YES=yes pkg bootstrap
+fi
 
 echo 'Setting up VM Tools..'
 if [ "$PACKER_BUILDER_TYPE" = 'vmware-iso' ]; then
-	env ASSUME_ALWAYS_YES=yes pkg install -y open-vm-tools-nox11
+	pkg install -y open-vm-tools-nox11
 	echo 'vmware_guest_vmblock_enable="YES"' >> /etc/rc.conf
 	echo 'vmware_guest_vmhgfs_enable="YES"' >> /etc/rc.conf
 	echo 'vmware_guest_vmmemctl_enable="YES"' >> /etc/rc.conf
 	echo 'vmware_guest_vmxnet_enable="YES"' >> /etc/rc.conf
 	echo 'vmware_guestd_enable="YES"' >> /etc/rc.conf
 elif [ "$PACKER_BUILDER_TYPE" = 'virtualbox-iso' ]; then
-	env ASSUME_ALWAYS_YES=yes pkg install -y virtualbox-ose-additions
+	pkg install -y virtualbox-ose-additions
 else
 	echo 'Unknown type of VM, not installing tools..'
 fi
@@ -36,6 +38,10 @@ chmod 600 ~/vagrant/.ssh/authorized_keys
 echo
 echo 'Changing roots shell back'
 chsh -s csh root
+
+# This causes a hang on shutdown that we cannot automatically recover from
+#echo 'Patching FreeBSD..'
+#freebsd-update fetch install > /dev/null
 
 echo
 echo 'Post-install complete.'
