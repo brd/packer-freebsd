@@ -33,7 +33,7 @@ mkdir ~vagrant/.ssh
 chmod 700 ~vagrant/.ssh
 curl -skL -o ~vagrant/.ssh/authorized_keys http://github.com/mitchellh/vagrant/raw/master/keys/vagrant.pub
 chown -R vagrant ~vagrant/.ssh
-chmod 600 ~/vagrant/.ssh/authorized_keys
+chmod 600 ~vagrant/.ssh/authorized_keys
 
 echo
 echo 'Changing roots shell back'
