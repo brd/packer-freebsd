@@ -4,6 +4,12 @@ Vagrant.configure("2") do |config|
   config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
   config.vm.box = "FreeBSD-10.1-RELEASE-vmware.box"
   config.vm.network "private_network", ip: "10.0.1.10"
+  config.ssh.shell = "csh"
+
+  config.vm.provider :vmware_fusion do |v|
+    v.vmx["memsize"] = "1024"
+    v.vmx["numvcpus"] = "1"
+  end
 
   config.vm.provider :virtualbox do |vb|
     # vb.customize ["startvm", :id, "--type", "gui"]
