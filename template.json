@@ -2,7 +2,7 @@
 	"builders": [
 		{
 			"boot_command": [
-				"<enter><wait5>",
+				"<enter><wait>",
 				"<enter><wait>",
 				"freebsd-vagrant<enter><wait>",
 				"<down><spacebar>",
@@ -16,6 +16,8 @@
 				"<enter><wait>",
 				"<wait10>",
 				"<wait10>",
+				"<wait10>",
+				"<wait10>",
 				"vagrant<enter><wait>",
 				"vagrant<enter><wait>",
 				"<enter><wait>",
@@ -24,7 +26,7 @@
 				"<right><enter><wait>",
 				"<enter><wait>",
 				"<right><enter><wait>",
-				"a<enter>",
+				"a<enter><wait>",
 				"<enter><wait>",
 				"<enter><wait>",
 				"<enter><wait>",
@@ -55,7 +57,6 @@
 				"echo 'fsck_y_enable=\"YES\"' >> /etc/rc.conf<enter>",
 				"exit<enter><wait>",
 				"<enter>",
-				"<wait10>",
 				"<wait10>",
 				"<wait10>",
 				"<wait10>",
@@ -76,7 +77,7 @@
 		},
 		{
 			"boot_command": [
-				"<enter><wait5>",
+				"<enter><wait>",
 				"<enter><wait>",
 				"freebsd-vagrant<enter><wait>",
 				"<down><spacebar>",
@@ -90,6 +91,8 @@
 				"<enter><wait>",
 				"<wait10>",
 				"<wait10>",
+				"<wait10>",
+				"<wait10>",
 				"vagrant<enter><wait>",
 				"vagrant<enter><wait>",
 				"<enter><wait>",
@@ -98,7 +101,7 @@
 				"<right><enter><wait>",
 				"<enter><wait>",
 				"<right><enter><wait>",
-				"a<enter>",
+				"a<enter><wait>",
 				"<enter><wait>",
 				"<enter><wait>",
 				"<enter><wait>",
@@ -132,7 +135,6 @@
 				"<wait10>",
 				"<wait10>",
 				"<wait10>",
-				"<wait10>",
 				""
 			],
 			"boot_wait": "30s",
@@ -146,7 +148,7 @@
 		  "ssh_username": "root",
 			"ssh_password": "vagrant",
 		  "ssh_wait_timeout": "30s",
-			"shutdown_command": "poweroff"
+			"shutdown_command": "poweroff; poweroff"
 		}
 	],
   "provisioners": [
