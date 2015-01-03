@@ -4,7 +4,7 @@ echo 'Running post-install..'
 
 echo 'Setting up pkg'
 if [ ! -f /usr/local/sbin/pkg ]; then
-	env ASSUME_ALWAYS_YES=yes pkg bootstrap
+	ASSUME_ALWAYS_YES=yes pkg bootstrap
 fi
 
 echo 'Setting up VM Tools..'
@@ -17,6 +17,8 @@ if [ "$PACKER_BUILDER_TYPE" = 'vmware-iso' ]; then
 	echo 'vmware_guestd_enable="YES"' >> /etc/rc.conf
 elif [ "$PACKER_BUILDER_TYPE" = 'virtualbox-iso' ]; then
 	pkg install -y virtualbox-ose-additions
+	echo 'vboxguest_enable="YES"' >> /etc/rc.conf
+        echo 'vboxservice_enable="YES"' >> /etc/rc.conf
 else
 	echo 'Unknown type of VM, not installing tools..'
 fi
@@ -24,7 +26,7 @@ fi
 echo
 echo 'Setting up sudo..'
 pkg install -y sudo
-echo 'vagrant ALL=(ALL) NOPASSWD: ALL' >> /usr/local/etc/sudoers
+echo 'vagrant ALL=(ALL) NOPASSWD: ALL' >> /usr/local/etc/sudoers.d/vagrant
 
 echo
 echo 'Setting up the vagrant ssh keys'
