@@ -154,7 +154,15 @@
   "post-processors": [
     {
       "output": "FreeBSD-10.1-RELEASE-{{.Provider}}.box",
-      "type": "vagrant"
+      "type": "vagrant",
+      "override": {
+        "vmware": {
+          "vagrantfile_template": "./Vagrantfile.vmware"
+        },
+        "virtualbox": {
+          "vagrantfile_template": "./Vagrantfile.virtualbox"
+        }
+      }
     }
   ]
 }
