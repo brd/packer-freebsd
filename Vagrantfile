@@ -1,10 +1,12 @@
 # -*- mode: ruby; -*-
 Vagrant.configure("2") do |config|
   config.vm.guest = :freebsd
-  config.vm.synced_folder ".", "/vagrant", id: "vagrant-root", disabled: true
-  config.vm.box = "FreeBSD-10.1-RELEASE-vmware.box"
-  config.vm.network "private_network", ip: "10.0.1.10"
-  config.ssh.shell = "csh"
+  config.vm.box = "FreeBSD-10.1.box"
+  config.vm.synced_folder ".", "/vagrant", type: "nfs"
+  #
+  # Un-comment the following line when working with virtualbox
+  # config.vm.network "private_network", ip: "10.6.66.42"
+  config.ssh.shell = "tcsh"
 
   config.vm.provider :vmware_fusion do |v|
     v.vmx["memsize"] = "1024"
@@ -12,12 +14,8 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provider :virtualbox do |vb|
-    # vb.customize ["startvm", :id, "--type", "gui"]
     vb.customize ["modifyvm", :id, "--memory", "1024"]
     vb.customize ["modifyvm", :id, "--cpus", "1"]
     vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
-    vb.customize ["modifyvm", :id, "--audio", "none"]
-    vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
-    vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
   end
 end
