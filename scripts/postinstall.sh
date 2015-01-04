@@ -27,7 +27,7 @@ fi
 echo
 echo 'Setting up sudo..'
 pkg install -y sudo
-echo 'vagrant ALL=(ALL) NOPASSWD: ALL' >> /usr/local/etc/sudoers.d/vagrant
+echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /usr/local/etc/sudoers.d/vagrant
 
 echo
 echo 'Setting up the vagrant ssh keys'
