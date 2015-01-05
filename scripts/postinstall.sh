@@ -17,9 +17,9 @@ if [ "$PACKER_BUILDER_TYPE" = 'vmware-iso' ]; then
 	echo 'vmware_guestd_enable="YES"' >> /etc/rc.conf
 elif [ "$PACKER_BUILDER_TYPE" = 'virtualbox-iso' ]; then
 	pkg install -y virtualbox-ose-additions
-        echo 'ifconfig_em1="inet 10.6.66.42 netmask 255.255.255.0"' >> /etc/rc.conf
+	echo 'ifconfig_em1="inet 10.6.66.42 netmask 255.255.255.0"' >> /etc/rc.conf
 	echo 'vboxguest_enable="YES"' >> /etc/rc.conf
-        echo 'vboxservice_enable="YES"' >> /etc/rc.conf
+	echo 'vboxservice_enable="YES"' >> /etc/rc.conf
 else
 	echo 'Unknown type of VM, not installing tools..'
 fi
