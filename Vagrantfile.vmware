@@ -1,18 +1,12 @@
 # -*- mode: ruby; -*-
 Vagrant.configure("2") do |config|
   config.vm.guest = :freebsd
-  config.vm.box = "FreeBSD-10.1-RELEASE-vmware.box"
+  config.vm.box = "FreeBSD-10.1"
   config.vm.synced_folder ".", "/vagrant", type: "nfs"
   config.ssh.shell = "tcsh"
 
   config.vm.provider :vmware_fusion do |v|
     v.vmx["memsize"] = "1024"
     v.vmx["numvcpus"] = "1"
-  end
-
-  config.vm.provider :virtualbox do |vb|
-    vb.customize ["modifyvm", :id, "--memory", "1024"]
-    vb.customize ["modifyvm", :id, "--cpus", "1"]
-    vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
   end
 end
