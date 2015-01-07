@@ -7,7 +7,7 @@ To create a vagrant box for FreeBSD 10.1-RELEASE:
  * Clone this repo onto your machine
  * Build the Vagrant box with: `packer build template.json`
  * Wait..
- * Add one resultant vagrant boxes using:
+ * Add one of the resultant vagrant boxes using:
    * VirtualBox `vagrant box add FreeBSD-10.1 FreeBSD-10.1-RELEASE-virtualbox.box`
    * VMware `vagrant box add FreeBSD-10.1 FreeBSD-10.1-RELEASE-vmware.box`
  * Start the Vagrant VM: `vagrant up`
