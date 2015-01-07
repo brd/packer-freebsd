@@ -1,12 +1,18 @@
 # FreeBSD Packer template
 
-Creates a vagrant box for FreeBSD 10.1-RELEASE.
+To create a vagrant box for FreeBSD 10.1-RELEASE:
 
-Run using `packer build template.json`
-
-Add resultant vagrant boxes using:
- * `vagrant box add FreeBSD-10.1 FreeBSD-10.1-RELEASE-virtualbox.box`
- * `vagrant box add FreeBSD-10.1 FreeBSD-10.1-RELEASE-vmware.box`
+ * Install [Vagrant](https://www.vagrantup.com)
+ * Install [Packer](https://www.packer.io/)
+ * Clone this repo onto your machine
+ * Build the Vagrant box with: `packer build template.json`
+ * Wait..
+ * Add one resultant vagrant boxes using:
+   * VirtualBox `vagrant box add FreeBSD-10.1 FreeBSD-10.1-RELEASE-virtualbox.box`
+   * VMware `vagrant box add FreeBSD-10.1 FreeBSD-10.1-RELEASE-vmware.box`
+ * Start the Vagrant VM: `vagrant up`
+ * Connect to the VM: `vagrant ssh`
+ * Hack away
 
 Initialize vagrant using `vagrant init --minimal FreeBSD-10.1`
 
