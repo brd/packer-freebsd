@@ -60,8 +60,8 @@
       "guest_os_type": "",
       "type": "vmware-iso",
       "guest_os_type": "freebsd-64",
-      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/11.0/FreeBSD-11.0-CURRENT-amd64-20141222-r276066-disc1.iso",
-      "iso_checksum": "44248a38ed73ff0192925071bc1509c61a4395181b7a48ec88b30fb4697bf8c9",
+      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/11.0/FreeBSD-11.0-CURRENT-amd64-20150111-r276981-disc1.iso",
+      "iso_checksum": "a080380451e0060422d7ac05beebd4d028280f0038ea9e2467cd85ee20628574",
       "iso_checksum_type": "sha256",
       "ssh_username": "root",
       "ssh_password": "vagrant",
@@ -128,8 +128,8 @@
       "guest_os_type": "",
       "type": "virtualbox-iso",
       "guest_os_type": "FreeBSD_64",
-      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/11.0/FreeBSD-11.0-CURRENT-amd64-20141222-r276066-disc1.iso",
-      "iso_checksum": "44248a38ed73ff0192925071bc1509c61a4395181b7a48ec88b30fb4697bf8c9",
+      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/11.0/FreeBSD-11.0-CURRENT-amd64-20150111-r276981-disc1.iso",
+      "iso_checksum": "0fabe37dae2f41605d7881e1ba05f897be540eb820babaebcae7e3754b79bdc4",
       "iso_checksum_type": "sha256",
       "ssh_username": "root",
       "ssh_password": "vagrant",
@@ -147,7 +147,7 @@
   ],
   "post-processors": [
     {
-      "output": "FreeBSD-CURRENT-r276066-{{.Provider}}.box",
+      "output": "FreeBSD-CURRENT-r276981-{{.Provider}}.box",
       "type": "vagrant",
       "override": {
         "vmware": {
