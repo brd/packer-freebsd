@@ -1,25 +1,17 @@
 # FreeBSD Packer template
 
-Prerequisites for using either the 10.1-RELEASE or -CURRENT boxes:
+Prerequisites:
 
  * Install [Vagrant](https://www.vagrantup.com)
  * Install [Packer](https://www.packer.io/)
  * Clone this repo onto your machine
 
-To create a vagrant box for FreeBSD 10.1-RELEASE or -CURRENT (r276981):
+To create a vagrant box for FreeBSD 10.1-RELEASE: 
 
  * Build the Vagrant box with: `packer build template-10.1.json`
  * Wait.
  * Add the appropriate Vagrant box for your system.  For example, on VMware:
    `vagrant box add --name FreeBSD-10.1 FreeBSD-10.1-RELEASE-vmware.box`
-
-To create a vagrant box for -CURRENT:
-
- * Build using `./automatic-current.sh`
-   * This will autodetect the latest -CURRENT snapshot, pull it, and apply
-     the recipe.  NOTE: THIS MAY FAIL ON NEWER BUILDS.
- * Add the appropriate Vagrant box for your system.  For example, on VirtualBox:
-   `vagrant box add --name FreeBSD-CURRENT-r276981 FreeBSD-CURRENT-r276981-virtualbox.box`
 
 To use any Vagrant box:
 
