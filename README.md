@@ -13,6 +13,10 @@ To create a vagrant box for FreeBSD 10.1-RELEASE:
  * Add the appropriate Vagrant box for your system.  For example, on VMware:
    `vagrant box add --name FreeBSD-10.1 FreeBSD-10.1-RELEASE-vmware.box`
 
+to build virtualbox image only:
+
+`packer build -only=virtualbox-iso template-10.1.json`
+
 To use any Vagrant box:
 
  * Initialize vagrant using: `vagrant init --minimal <box name>`
