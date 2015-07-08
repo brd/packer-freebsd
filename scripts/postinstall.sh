@@ -2,6 +2,9 @@
 
 echo 'Running post-install..'
 
+echo 'Disabling Beastie boot screen..'
+echo 'beastie_disable=\"YES\"' >> /boot/loader.conf
+
 echo 'Setting up pkg'
 if [ ! -f /usr/local/sbin/pkg ]; then
 	ASSUME_ALWAYS_YES=yes pkg bootstrap
