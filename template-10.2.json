@@ -63,8 +63,8 @@
       "guest_os_type": "",
       "type": "vmware-iso",
       "guest_os_type": "freebsd-64",
-      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/10.2/FreeBSD-10.2-PRERELEASE-amd64-20150704-r285132-disc1.iso",
-      "iso_checksum": "e6c466b8d79d16d8a345a5278c8e57c8",
+      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/releases/ISO-IMAGES/10.2/FreeBSD-10.2-amd64-disc1.iso",
+      "iso_checksum": "ab5842858500b7a62889df39a1932343",
       "iso_checksum_type": "md5",
       "ssh_username": "root",
       "ssh_password": "vagrant",
@@ -134,8 +134,8 @@
       "guest_os_type": "",
       "type": "virtualbox-iso",
       "guest_os_type": "FreeBSD_64",
-      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/10.2/FreeBSD-10.2-PRERELEASE-amd64-20150704-r285132-disc1.iso",
-      "iso_checksum": "e6c466b8d79d16d8a345a5278c8e57c8",
+      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/releases/ISO-IMAGES/10.2/FreeBSD-10.2-amd64-disc1.iso",
+      "iso_checksum": "ab5842858500b7a62889df39a1932343",
       "iso_checksum_type": "md5",
       "ssh_username": "root",
       "ssh_password": "vagrant",
@@ -153,7 +153,7 @@
   ],
   "post-processors": [
     {
-      "output": "FreeBSD-10.2-PRERELEASE-20150704-r285132{{.Provider}}.box",
+      "output": "FreeBSD-10.2-{{.Provider}}.box",
       "type": "vagrant",
       "override": {
         "vmware": {
