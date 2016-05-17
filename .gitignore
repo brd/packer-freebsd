@@ -1,3 +1,6 @@
 packer_cache/
+Vagrantfile
+*.box
+.vagrant
 
 .DS_Store
