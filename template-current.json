@@ -1,8 +1,9 @@
 {
   "variables": {
     "iso_version": "11.0",
-    "iso_daterev": "20150223-r279210",
-    "iso_checksum": "4b90aacc81d2246f8156b14457322812c14c10fbadd8af37943d0eb4b08ef586"
+    "iso_checksum_type": "sha512",
+    "iso_daterev": "20160429-r298793",
+    "iso_checksum": "34244094672f600e9c99ea39e08277c7c69cbd8ecf89ae0d2c7f01af99395a4d2710fe6c2fc21a62f19f10dcdf379be7d8d9716ca5dfa2c0997a7aa535d2ce38"
   },
   "builders": [
     {
@@ -67,7 +68,7 @@
       "guest_os_type": "freebsd-64",
       "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-CURRENT-amd64-{{user `iso_daterev`}}-disc1.iso",
       "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_checksum_type": "sha256",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
       "ssh_wait_timeout": "30s",
@@ -135,7 +136,7 @@
       "guest_os_type": "FreeBSD_64",
       "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-CURRENT-amd64-{{user `iso_daterev`}}-disc1.iso",
       "iso_checksum": "{{user `iso_checksum`}}",
-      "iso_checksum_type": "sha256",
+      "iso_checksum_type": "{{user `iso_checksum_type`}}",
       "ssh_username": "root",
       "ssh_password": "vagrant",
       "ssh_wait_timeout": "30s",

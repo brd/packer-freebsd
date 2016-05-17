@@ -5,6 +5,9 @@
 
 URL="ftp://ftp.FreeBSD.org/pub/FreeBSD/snapshots/ISO-IMAGES/11.0/"
 
+# Valid values are "none", "md5", "sha1", "sha256", or "sha512".
+CHECKSUM_TYPE="sha512"
+
 error() {
 	echo "$0: ERROR: $1"
 	[ -n "$2" ] && echo "$2"
@@ -15,7 +18,7 @@ which curl >/dev/null 2>&1 || error "Curl required, but not available?"
 
 echo "Looking for latest -CURRENT from ${URL} ..."
 
-cksumfile=$(curl -sl ${URL} | grep SHA256 | grep amd64 | sort | tail -1)
+cksumfile=$(curl -sl ${URL} | grep -i "${CHECKSUM_TYPE}" | grep amd64 | sort | tail -1)
 [ -z "$cksumfile" ] && error "Could not detect the latest checksum file"
 
 cksumline=$(curl -so - ${URL}/${cksumfile} | grep 'disc1\.iso)')
@@ -34,8 +37,10 @@ rev=$(echo $isofile | awk -Famd64- '{print $2}' | awk -F-disc1.iso '{print $1}')
 
 echo "Using ${isofile} (checksum ${cksum}) ..."
 
+exec \
 packer build \
 	-var "iso_daterev=${rev}" \
 	-var "iso_checksum=${cksum}" \
+	-var "iso_checksum_type=${CHECKSUM_TYPE}" \
 	$* \
 	template-current.json
