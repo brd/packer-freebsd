@@ -11,4 +11,4 @@ packer build \
 	-var "iso_checksum=${cksum}" \
 	-var "iso_checksum_type=${CHECKSUM_TYPE}" \
 	$* \
-	template-current-zfs.json
+	template-11.0-current-ufs.json
