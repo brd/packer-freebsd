@@ -179,7 +179,7 @@
   ],
   "post-processors": [
     {
-      "output": "FreeBSD-{{user `iso_version`}}-STABLE-ufs-{{user `iso_daterev`}}-{{.Provider}}.box",
+      "output": "FreeBSD-{{user `iso_version`}}-STABLE-zfs-{{user `iso_daterev`}}-{{.Provider}}.box",
       "type": "vagrant",
       "override": {
         "vmware": {
