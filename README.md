@@ -1,12 +1,24 @@
 # FreeBSD Packer template
 
-Prerequisites for using either the `10.1-RELEASE` or `-CURRENT` boxes:
+Prerequisites:
 
  * Install [Vagrant](https://www.vagrantup.com)
  * Install [Packer](https://www.packer.io/)
  * Clone this repo onto your machine
 
-To create a Vagrant box for FreeBSD `10.1-RELEASE` (`r276981`):
+## FreeBSD `10.3-RELEASE`
+
+```sh
+% packer build template-10.3-release-ufs.json
+% packer build template-10.3-release-zfs.json
+```
+
+After downloading the ISO, this step takes ~6min per image (e.g. VMware ZFS
+image).
+
+To limit the build to just VMware or Virtualbox, pass the argument
+`-only=vmware-iso` or `-only=virtualbox` to `packer`.
+
 
  * Build the Vagrant box with: `packer build template-10.1.json`
  * Wait.
