@@ -1,10 +1,24 @@
-# FreeBSD Packer template
+# FreeBSD Packer Templates
+
+Creates FreeBSD images using official `disk1.iso` snapshot and release media.
+
+Images supported:
+  * VMware Fusion + Vagrant
+  * Virtualbox + Vagrant
 
 Prerequisites:
-
  * Install [Vagrant](https://www.vagrantup.com)
  * Install [Packer](https://www.packer.io/)
  * Clone this repo onto your machine
+
+Common Workflow:
+
+```sh
+% ./automatic-10.3-stable-zfs.sh
+% vagrant up
+% vagrant ssh
+% vagrant suspend
+```
 
 ## FreeBSD `10.3-RELEASE`
 
@@ -19,13 +33,17 @@ image).
 To limit the build to just VMware or Virtualbox, pass the argument
 `-only=vmware-iso` or `-only=virtualbox` to `packer`.
 
+## FreeBSD `10.3-STABLE`
 
- * Build the Vagrant box with: `packer build template-10.1.json`
- * Wait.
- * Add the appropriate Vagrant box for your system.  For example, on VMware:
-   `vagrant box add --name FreeBSD-10.1 FreeBSD-10.1-RELEASE-vmware.box`
+To create a Vagrant box for FreeBSD `10.3-STABLE` (`20160429-r298781`) using
+a UFS or ZFS filesystem:
 
-To create a Vagrant box for `-CURRENT` (as of `20160429-r298793`):
+```sh
+./automatic-10.3-stable-ufs.sh
+./automatic-10.3-stable-zfs.sh
+```
+
+
 
  * Build using `./automatic-current-{ufs,zfs}.sh`
    * This will autodetect the latest `-CURRENT` snapshot, pull it, and apply
@@ -58,3 +76,16 @@ Notes:
    `/etc/exports` in order to allow Vagrant to mount `/vagrant` in the guest.
    See
    [Vagrant NFS synced folders](https://docs.vagrantup.com/v2/synced-folders/nfs.html)
+
+## Debugging Builds
+
+The following are "common" problems with workarounds:
+
+1. Packer fails because the `bsdinstall` menus have changed when building a
+   `-current` or `-stable` image.  Solution: Change `"headless": "true"` to
+   `"false"`, add the `-debug` flag to `packer build` and submit a patch
+   fixing the menu change.
+
+2. Packer fails to connect via SSH to the instance to do the post-install.
+   Possible solution: There are too many SSH keys loaded in your agent.
+   Prefix your command with `env SSH_AUTH_SOCK=/dev/null ...`
