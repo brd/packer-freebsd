@@ -15,11 +15,11 @@ To create a vagrant box for FreeBSD 10.1-RELEASE or -CURRENT (r276981):
 
 To create a vagrant box for -CURRENT:
 
- * Build using `./automatic-current.sh`
+ * Build using `./automatic-current-{ufs,zfs}.sh`
    * This will autodetect the latest -CURRENT snapshot, pull it, and apply
      the recipe.  NOTE: THIS MAY FAIL ON NEWER BUILDS.
  * Add the appropriate Vagrant box for your system.  For example, on VirtualBox:
-   `vagrant box add --name FreeBSD-CURRENT-20160429-r298793 FreeBSD-CURRENT-20160429-r298793-virtualbox.box`
+   `vagrant box add --name FreeBSD-CURRENT-ufs-20160429-r298793 FreeBSD-CURRENT-ufs-20160429-r298793-virtualbox.box`
 
 To use any Vagrant box:
 
