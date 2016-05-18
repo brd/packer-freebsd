@@ -10,6 +10,8 @@ if [ ! -f /usr/local/sbin/pkg ]; then
 	ASSUME_ALWAYS_YES=yes pkg bootstrap
 fi
 
+/usr/sbin/pkg audit -F
+
 echo 'Setting up VM Tools..'
 if [ "$PACKER_BUILDER_TYPE" = 'vmware-iso' ]; then
 	pkg install -y open-vm-tools-nox11
