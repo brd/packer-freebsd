@@ -36,11 +36,3 @@ rev=$(echo $isofile | awk -Famd64- '{print $2}' | awk -F-disc1.iso '{print $1}')
 	"  $cksumline"
 
 echo "Using ${isofile} (checksum ${cksum}) ..."
-
-exec \
-packer build \
-	-var "iso_daterev=${rev}" \
-	-var "iso_checksum=${cksum}" \
-	-var "iso_checksum_type=${CHECKSUM_TYPE}" \
-	$* \
-	template-current.json
