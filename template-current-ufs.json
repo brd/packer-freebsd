@@ -47,11 +47,11 @@
         "<enter><wait>",
         "0700",
         "<enter><wait>",
-        "yes",
+        "Y",
         "<enter><wait>",
-        "no",
+        "N",
         "<enter><wait>",
-        "no",
+        "N",
         "<enter><wait>",
         "vagrant<enter><wait>",
         "vagrant<enter><wait>",
@@ -124,11 +124,11 @@
         "<enter><wait>",
         "0700",
         "<enter><wait>",
-        "yes",
+        "Y",
         "<enter><wait>",
-        "no",
+        "N",
         "<enter><wait>",
-        "no",
+        "N",
         "<enter><wait>",
         "vagrant<enter><wait>",
         "vagrant<enter><wait>",
@@ -171,7 +171,7 @@
   ],
   "post-processors": [
     {
-      "output": "FreeBSD-CURRENT-{{user `iso_daterev`}}-{{.Provider}}.box",
+      "output": "FreeBSD-CURRENT-ufs-{{user `iso_daterev`}}-{{.Provider}}.box",
       "type": "vagrant",
       "override": {
         "vmware": {
