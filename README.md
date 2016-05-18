@@ -19,7 +19,7 @@ To create a vagrant box for -CURRENT:
    * This will autodetect the latest -CURRENT snapshot, pull it, and apply
      the recipe.  NOTE: THIS MAY FAIL ON NEWER BUILDS.
  * Add the appropriate Vagrant box for your system.  For example, on VirtualBox:
-   `vagrant box add --name FreeBSD-CURRENT-r276981 FreeBSD-CURRENT-r276981-virtualbox.box`
+   `vagrant box add --name FreeBSD-CURRENT-20160429-r298793 FreeBSD-CURRENT-20160429-r298793-virtualbox.box`
 
 To use any Vagrant box:
 
