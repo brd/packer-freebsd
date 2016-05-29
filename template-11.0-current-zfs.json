@@ -70,7 +70,7 @@
         "echo 'autoboot_delay=\"-1\"' >> /boot/loader.conf<enter><wait>",
         "chsh -s sh root<enter><wait>",
         "exit<enter><wait>",
-        "R<wait10><wait10>"
+        "R<wait10><wait10><wait10>"
       ],
       "boot_wait": "45s",
       "disk_size": 20480,
@@ -149,12 +149,12 @@
         "echo 'autoboot_delay=\"-1\"' >> /boot/loader.conf<enter><wait>",
         "chsh -s sh root<enter><wait>",
         "exit<enter><wait>",
-        "R<wait10><wait10>"
+        "R<wait10><wait10><wait10>"
       ],
       "boot_wait": "45s",
       "disk_size": 20480,
       "type": "virtualbox-iso",
-      "headless": "true",
+      "headless": "false",
       "guest_os_type": "FreeBSD_64",
       "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-CURRENT-amd64-{{user `iso_daterev`}}-disc1.iso",
       "iso_checksum": "{{user `iso_checksum`}}",
