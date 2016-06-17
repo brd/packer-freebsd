@@ -9,7 +9,6 @@ Common Workflow:
 % vagrant ssh
 % vagrant suspend
 ```
-
 Images supported:
 * VMware Fusion + Vagrant
 * Virtualbox + Vagrant
@@ -66,8 +65,7 @@ image).
 ## `automatic-*` Script Notes
 
 * To build only `vmware-iso` or `virtualbox-iso`, pass `-only=virtualbox-iso`
-  `-only=vmware-iso` or to the to the script, which will forward the flag to
-  `packer build`
+  or `-only=vmware-iso` to the script, which will forward the flag to `packer build`
 * This will autodetect the latest snapshot, pull it, and apply the Packer
   Template.
 * Builds may suddenly fail if `bsdinstall` has its menu changed (see the
