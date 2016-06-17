@@ -27,7 +27,7 @@ Notes:
   See
   [Vagrant NFS synced folders](https://docs.vagrantup.com/v2/synced-folders/nfs.html)
 * To limit the build to just VMware or Virtualbox, pass the argument
-  `-only=vmware-iso` or `-only=virtualbox` to either `packer build` or the
+  `-only=vmware-iso` or `-only=virtualbox-iso` to either `packer build` or the
   `automatic-*` scripts mentioned below.
 
 ## FreeBSD `11.0-CURRENT`
@@ -65,7 +65,7 @@ image).
 
 ## `automatic-*` Script Notes
 
-* To build only `vmware-iso` or `virtualbox`, pass `-only=virtualbox`
+* To build only `vmware-iso` or `virtualbox-iso`, pass `-only=virtualbox-iso`
   `-only=vmware-iso` or to the to the script, which will forward the flag to
   `packer build`
 * This will autodetect the latest snapshot, pull it, and apply the Packer
