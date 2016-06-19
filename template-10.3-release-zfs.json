@@ -173,7 +173,7 @@
   "provisioners": [
     {
       "scripts": [
-        "scripts/zroot-setup.sh",
+        "scripts/zfs-setup.sh",
         "scripts/postinstall.sh"
       ],
       "type": "shell"
