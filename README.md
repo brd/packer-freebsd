@@ -9,6 +9,7 @@ Common Workflow:
 % vagrant ssh
 % vagrant suspend
 ```
+
 Images supported:
 * VMware Fusion + Vagrant
 * Virtualbox + Vagrant
@@ -26,12 +27,23 @@ Notes:
   See
   [Vagrant NFS synced folders](https://docs.vagrantup.com/v2/synced-folders/nfs.html)
 * To limit the build to just VMware or Virtualbox, pass the argument
-  `-only=vmware-iso` or `-only=virtualbox-iso` to either `packer build` or the
+  `-only=vmware-iso` or `-only=virtualbox` to either `packer build` or the
   `automatic-*` scripts mentioned below.
+
+## FreeBSD `11.0-ALPHA4`
+
+To create a Vagrant box for `11.0-ALPHA4` using ZFS as a root filesystem:
+
+```sh
+% packer build -only={vmware-iso,virtualbox-iso} template-11.0-alpha4-zfs.json
+```
+
+Remove the `-only=` argument if you want to build both `vmware-iso` and
+`virtualbox-iso` Boxes.
 
 ## FreeBSD `11.0-CURRENT`
 
-To create a Vagrant box for `11.0-CURRENT` (as of `20160429-r298793`) using a
+To create a Vagrant box for `11.0-CURRENT` (as of `20160518-r300097`) using a
 UFS or ZFS filesystem:
 
 ```sh
@@ -41,7 +53,7 @@ UFS or ZFS filesystem:
 
 ## FreeBSD `10.3-STABLE`
 
-To create a Vagrant box for FreeBSD `10.3-STABLE` (`20160429-r298781`) using
+To create a Vagrant box for FreeBSD `10.3-STABLE` (`20160518-r300092`) using
 a UFS or ZFS filesystem:
 
 ```sh
@@ -65,7 +77,9 @@ image).
 ## `automatic-*` Script Notes
 
 * To build only `vmware-iso` or `virtualbox-iso`, pass `-only=virtualbox-iso`
-  or `-only=vmware-iso` to the script, which will forward the flag to `packer build`
+  or `-only=vmware-iso` to the script, which will forward the flag to `packer
+  build`.  Omitting an `-only` argument will result in Packer building all
+  available providers.
 * This will autodetect the latest snapshot, pull it, and apply the Packer
   Template.
 * Builds may suddenly fail if `bsdinstall` has its menu changed (see the
@@ -82,7 +96,7 @@ image).
 * Destroy a suspended VM: `vagrant destroy`
 * See all images: `vagrant global-status`
 * Add the appropriate Vagrant box for your system.  For example, on VMware:
-  `vagrant box add --name FreeBSD-11.0-CURRENT-ufs-20160429-r298793 FreeBSD-11.0-CURRENT-ufs-20160429-r298793-virtualbox.box`
+  `vagrant box add --name FreeBSD-11.0-CURRENT-ufs-20160518-r300097 FreeBSD-11.0-CURRENT-ufs-20160518-r300097-virtualbox.box`
 
 ## Debugging Builds
 

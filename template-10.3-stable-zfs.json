@@ -1,12 +1,13 @@
 {
   "variables": {
-    "iso_checksum": "033fee05be879878b50315ae243b6aac487ac6749b849ec16478067f965bcba0d606aeea1bfd1701f6a983269f2ce3eb75c16a458e7e11aa4298d0b2ab3eb27e",
+    "iso_checksum": "6a12fb4f29a939844bd6d108d9df0216f65446be5838e3de70627b7cdc6aed1fc2cb366cfb645ff6411e88517ea76d23ff44a7cdd9275cf9e504dd8e19a0c96f",
     "iso_checksum_type": "sha512",
-    "iso_daterev": "20160429-r298781",
+    "iso_daterev": "20160518-r300092",
     "iso_version": "10.3"
   },
   "builders": [
     {
+      "type": "vmware-iso",
       "boot_command": [
         "I<wait>",
         "<enter><wait>",
@@ -84,10 +85,10 @@
       "shutdown_command": "poweroff; poweroff",
       "ssh_password": "vagrant",
       "ssh_username": "root",
-      "ssh_wait_timeout": "45s",
-      "type": "vmware-iso"
+      "ssh_wait_timeout": "45s"
     },
     {
+      "type": "virtualbox-iso",
       "boot_command": [
         "I<wait>",
         "<enter><wait>",
@@ -165,8 +166,7 @@
       "shutdown_command": "poweroff; poweroff",
       "ssh_password": "vagrant",
       "ssh_username": "root",
-      "ssh_wait_timeout": "45s",
-      "type": "virtualbox-iso"
+      "ssh_wait_timeout": "45s"
     }
   ],
   "provisioners": [
@@ -179,7 +179,7 @@
   ],
   "post-processors": [
     {
-      "output": "FreeBSD-{{user `iso_version`}}-STABLE-ufs-{{user `iso_daterev`}}-{{.Provider}}.box",
+      "output": "FreeBSD-{{user `iso_version`}}-STABLE-zfs-{{user `iso_daterev`}}-{{.Provider}}.box",
       "type": "vagrant",
       "override": {
         "vmware": {
