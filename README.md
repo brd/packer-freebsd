@@ -76,9 +76,10 @@ image).
 
 ## `automatic-*` Script Notes
 
-* To build only `vmware-iso` or `virtualbox`, pass `-only=virtualbox`
-  `-only=vmware-iso` or to the to the script, which will forward the flag to
-  `packer build`
+* To build only `vmware-iso` or `virtualbox-iso`, pass `-only=virtualbox-iso`
+  or `-only=vmware-iso` to the script, which will forward the flag to `packer
+  build`.  Omitting an `-only` argument will result in Packer building all
+  available providers.
 * This will autodetect the latest snapshot, pull it, and apply the Packer
   Template.
 * Builds may suddenly fail if `bsdinstall` has its menu changed (see the

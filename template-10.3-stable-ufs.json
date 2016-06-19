@@ -7,6 +7,7 @@
   },
   "builders": [
     {
+      "type": "vmware-iso",
       "boot_command": [
         "I<wait>",
         "<enter><wait>",
@@ -82,10 +83,10 @@
       "shutdown_command": "poweroff; poweroff",
       "ssh_password": "vagrant",
       "ssh_username": "root",
-      "ssh_wait_timeout": "30s",
-      "type": "vmware-iso"
+      "ssh_wait_timeout": "30s"
     },
     {
+      "type": "virtualbox-iso",
       "boot_command": [
         "I<wait>",
         "<enter><wait>",
@@ -161,8 +162,7 @@
       "shutdown_command": "poweroff; poweroff",
       "ssh_password": "vagrant",
       "ssh_username": "root",
-      "ssh_wait_timeout": "30s",
-      "type": "virtualbox-iso"
+      "ssh_wait_timeout": "30s"
     }
   ],
   "provisioners": [

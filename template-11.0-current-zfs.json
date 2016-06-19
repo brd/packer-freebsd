@@ -7,6 +7,7 @@
   },
   "builders": [
     {
+      "type": "vmware-iso",
       "boot_command": [
         "I<wait>",
         "<enter><wait>",
@@ -74,18 +75,18 @@
       ],
       "boot_wait": "45s",
       "disk_size": 20480,
-      "headless": "true",
-      "type": "vmware-iso",
       "guest_os_type": "freebsd-64",
-      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-CURRENT-amd64-{{user `iso_daterev`}}-disc1.iso",
+      "headless": "true",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "ssh_username": "root",
+      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-CURRENT-amd64-{{user `iso_daterev`}}-disc1.iso",
+      "shutdown_command": "poweroff; poweroff",
       "ssh_password": "vagrant",
-      "ssh_wait_timeout": "30s",
-      "shutdown_command": "poweroff; poweroff"
+      "ssh_username": "root",
+      "ssh_wait_timeout": "30s"
     },
     {
+      "type": "virtualbox-iso",
       "boot_command": [
         "I<wait>",
         "<enter><wait>",
@@ -153,16 +154,15 @@
       ],
       "boot_wait": "45s",
       "disk_size": 20480,
-      "type": "virtualbox-iso",
-      "headless": "false",
       "guest_os_type": "FreeBSD_64",
-      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-CURRENT-amd64-{{user `iso_daterev`}}-disc1.iso",
+      "headless": "true",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "ssh_username": "root",
+      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-CURRENT-amd64-{{user `iso_daterev`}}-disc1.iso",
+      "shutdown_command": "poweroff; poweroff",
       "ssh_password": "vagrant",
-      "ssh_wait_timeout": "30s",
-      "shutdown_command": "poweroff; poweroff"
+      "ssh_username": "root",
+      "ssh_wait_timeout": "30s"
     }
   ],
   "provisioners": [
