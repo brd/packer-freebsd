@@ -1,10 +1,9 @@
 {
   "variables": {
-    "iso_daterev": "20160617-r301975",
-    "buildtag": "ALPHA4",
-    "iso_checksum": "077dc64a1707ff7cae9d82a79cf5f3ac12ad1a4fe950326d4562ba9dfb18deebd44a255a1dcba78607533789070dce0a536d0c141ac48a5e83792941748aa17b",
-    "iso_version": "11.0",
-    "iso_checksum_type": "sha512"
+    "iso_checksum": "cd15efd60f72288925495e4611edb64aa5c7be67d04a4c32142d684132f6244ec9c3dc307005e35aa4a47386aed347c78378920b63069d9f41c146202a15ed1a",
+    "iso_checksum_type": "sha512",
+    "iso_daterev": "20170210-r313553",
+    "iso_version": "11.0"
   },
   "builders": [
     {
@@ -77,7 +76,7 @@
       "headless": "false",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-CURRENT-amd64-{{user `iso_daterev`}}-disc1.iso",
+      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-STABLE-amd64-{{user `iso_daterev`}}-disc1.iso",
       "shutdown_command": "poweroff; poweroff",
       "ssh_password": "vagrant",
       "ssh_username": "root",
@@ -154,7 +153,7 @@
       "headless": "true",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-CURRENT-amd64-{{user `iso_daterev`}}-disc1.iso",
+      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-STABLE-amd64-{{user `iso_daterev`}}-disc1.iso",
       "shutdown_command": "poweroff; poweroff",
       "ssh_password": "vagrant",
       "ssh_username": "root",

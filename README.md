@@ -32,31 +32,17 @@ Notes:
   `-only=vmware-iso` or `-only=virtualbox` to either `packer build` or the
   `automatic-*` scripts mentioned below.
 
-## FreeBSD `11.0-ALPHA4`
+Remove the `-only=` argument if you want to build both `vmware-iso` and
+`virtualbox-iso` Boxes.
 
-To create a Vagrant box for `11.0-ALPHA4` using ZFS as a root filesystem:
+## FreeBSD `11.0-STABLE`
 
-```sh
-% packer build -only={vmware-iso,virtualbox-iso} template-11.0-alpha4-zfs.json
-```
-
-Remove the `-only=` argument from `packer build` if you want to build both
-`vmware-iso` and `virtualbox-iso` Boxes.
-
-To add the Box to Vagrant, use some variant of:
-
-```
-% vagrant box add FreeBSD-11.0-ALPHA4-zfs-vmware FreeBSD-11.0-ALPHA4-zfs-vmware.box
-```
-
-## FreeBSD `11.0-CURRENT`
-
-To create a Vagrant box for `11.0-CURRENT` (as of `20160518-r300097`) using a
+To create a Vagrant box for `11.0-STABLE` (as of `20170210-r313553`) using a
 UFS or ZFS filesystem:
 
 ```sh
-% ./automatic-11.0-current-ufs.sh
-% ./automatic-11.0-current-zfs.sh
+% ./automatic-11.0-stable-ufs.sh
+% ./automatic-11.0-stable-zfs.sh
 ```
 
 ## FreeBSD `10.3-STABLE`
