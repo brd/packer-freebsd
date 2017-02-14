@@ -33,6 +33,16 @@ Notes:
 Remove the `-only=` argument if you want to build both `vmware-iso` and
 `virtualbox-iso` Boxes.
 
+## FreeBSD `12.0-CURRENT`
+
+To create a Vagrant box for `12.0-CURRENT` (as of `20170210-r313561`) using a
+UFS or ZFS filesystem:
+
+```sh
+% ./automatic-12.0-current-ufs.sh
+% ./automatic-12.0-current-zfs.sh
+```
+
 ## FreeBSD `11.0-STABLE`
 
 To create a Vagrant box for `11.0-STABLE` (as of `20170210-r313553`) using a
