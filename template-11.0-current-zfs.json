@@ -1,9 +1,10 @@
 {
   "variables": {
-    "iso_checksum": "8b5c9a9240962a497507f374dcf3839744c63f271fe2b2d36a4fd4d46eb966a3a697684f3379dcb87816b92b44f443e5fa4a71ec713fc408c1ac60990d73817e",
-    "iso_checksum_type": "sha512",
-    "iso_daterev": "20160518-r300097",
-    "iso_version": "11.0"
+    "iso_daterev": "20160617-r301975",
+    "buildtag": "ALPHA4",
+    "iso_checksum": "077dc64a1707ff7cae9d82a79cf5f3ac12ad1a4fe950326d4562ba9dfb18deebd44a255a1dcba78607533789070dce0a536d0c141ac48a5e83792941748aa17b",
+    "iso_version": "11.0",
+    "iso_checksum_type": "sha512"
   },
   "builders": [
     {
@@ -79,7 +80,7 @@
       "headless": "true",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-CURRENT-amd64-{{user `iso_daterev`}}-disc1.iso",
+      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-amd64-{{user `iso_daterev`}}-disc1.iso",
       "shutdown_command": "poweroff; poweroff",
       "ssh_password": "vagrant",
       "ssh_username": "root",
@@ -148,17 +149,23 @@
         "Y<wait>",
         "sed -i -e 's/#PermitRootLogin no/PermitRootLogin yes/' /etc/ssh/sshd_config<enter><wait>",
         "echo 'autoboot_delay=\"-1\"' >> /boot/loader.conf<enter><wait>",
+        "echo 'vboxdrv_load=\"YES\"' >> /boot/loader.conf<enter><wait>",
+        "echo 'vboxnet_enable=\"YES\"' >> /boot/loader.conf<enter><wait>",
+        "sysrc vboxguest_enable YES<enter><wait>",
+        "sysrc vboxservice_enable YES<enter><wait>",
+        "pw groupmod wheel -m vagrant<enter><wait>",
         "chsh -s sh root<enter><wait>",
         "exit<enter><wait>",
         "R<wait10><wait10><wait10>"
       ],
       "boot_wait": "45s",
       "disk_size": 20480,
+      "format": "ova",
       "guest_os_type": "FreeBSD_64",
       "headless": "true",
       "iso_checksum": "{{user `iso_checksum`}}",
       "iso_checksum_type": "{{user `iso_checksum_type`}}",
-      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-CURRENT-amd64-{{user `iso_daterev`}}-disc1.iso",
+      "iso_url": "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-amd64-{{user `iso_daterev`}}-disc1.iso",
       "shutdown_command": "poweroff; poweroff",
       "ssh_password": "vagrant",
       "ssh_username": "root",
@@ -176,7 +183,7 @@
   ],
   "post-processors": [
     {
-      "output": "FreeBSD-CURRENT-zfs-{{user `iso_daterev`}}-{{.Provider}}.box",
+      "output": "FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-zfs-{{user `iso_daterev`}}-{{.Provider}}.box",
       "type": "vagrant",
       "override": {
         "vmware": {
