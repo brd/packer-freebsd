@@ -1,6 +1,8 @@
 # FreeBSD Packer Templates
 
-Creates FreeBSD images using official `disk1.iso` snapshot and release media.
+Creates FreeBSD images using official `disc1.iso` snapshot and release media.
+
+To see the latest ISO, run the `show-latest.sh` script.
 
 Common Workflow:
 ```sh
@@ -38,8 +40,14 @@ To create a Vagrant box for `11.0-ALPHA4` using ZFS as a root filesystem:
 % packer build -only={vmware-iso,virtualbox-iso} template-11.0-alpha4-zfs.json
 ```
 
-Remove the `-only=` argument if you want to build both `vmware-iso` and
-`virtualbox-iso` Boxes.
+Remove the `-only=` argument from `packer build` if you want to build both
+`vmware-iso` and `virtualbox-iso` Boxes.
+
+To add the Box to Vagrant, use some variant of:
+
+```
+% vagrant box add FreeBSD-11.0-ALPHA4-zfs-vmware FreeBSD-11.0-ALPHA4-zfs-vmware.box
+```
 
 ## FreeBSD `11.0-CURRENT`
 
