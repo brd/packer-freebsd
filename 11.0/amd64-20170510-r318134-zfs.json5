@@ -1,0 +1,389 @@
+{
+  variables: {
+    autoboot_delay: "-1",
+    arch: "amd64",
+    boot_wait: "45s",
+    compression_level: "9",
+    disk_size_mb: "20480",
+    hw_cpu_cores: "2",
+    hw_ram_mb: "1536",
+    ssh_wait_timeout: "30s",
+
+    // Set headless to false to debug
+    headless: "true",
+    hostname: "freebsd-vagrant",
+    iso_daterev: "20170510-r318134",
+    buildtag: "STABLE",
+    iso_checksum: "257d4fa23d4b0d6f3dbe5e1ffce2f834eecee92d2102911993346a663bd377037a10ca451bb4048eed67a4ed4fe3328b106eda647c5fb3a28414b6e306eb4a64",
+    iso_version: "11.0",
+    iso_checksum_type: "sha512",
+    vagrant_username: "vagrant",
+    vagrant_password: "vagrant",
+    virtualbox_format: "ova",
+    vmware_hardware_acceleration: "TRUE",
+    vmware_hardware_version: "12",
+    vmware_serial_port_enabled: "FALSE",
+  },
+  builders: [
+    {
+      type: "vmware-iso",
+      communicator: "ssh",
+      ssh_disable_agent: "true",
+      ssh_pty: "true",
+
+      // NOTE: Synchronize the boot_command list with `virtualbox-iso`'s
+      // `boot_command` list.
+      boot_command: [
+        // Welcome.  Install.
+        "I<wait>",
+
+        // Keymap Selection
+        "<enter><wait>",
+
+        // Set Hostname
+        "{{user `hostname`}}",
+        "<enter><wait>",
+
+        // Distribution Select
+        "s<wait>",        // Enable src
+        "<up><spacebar>", // Disable lib32
+        "<enter><wait>",
+
+        // Partitioning
+        "<down><down><down>", // Highlight "Auto (ZFS)"
+        "<enter><wait>",
+
+        // ZFS Configuration
+        "<enter><wait>", // Select Install
+
+        // ZFS Configuration
+        "<enter><wait>", // Select `stripe`
+
+        // ZFS Configuration
+        "<spacebar><enter>", // Toggle `da0`
+
+        // ZFS Configuration
+        "<left>", // Highlight "Yes" to destroy data device
+        "Y",      // Activate "Yes"
+
+        // Wait for the installation to complete.  Increase the number of
+        // <wait10> operations as necessary to match the capabilities of the IO
+        // of the building machine.
+        "<wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+
+        // Password
+        "vagrant<enter><wait>", // Enter password for the root account
+        "vagrant<enter><wait>", // Re-enter the password for the root account
+
+        // Network Configuration
+        "<enter><wait>", // Select `vmx0`
+
+        // Network Configuration
+        "Y<wait>",          // Enable IPv4 configuration
+        "Y",                // Select DHCP
+        "<wait10><wait10>", // Wait to acquire a DHCP address
+        "Y<wait>",          // Enable IPv6 configuration
+        "Y",                // Select SLAAC
+        "<wait10><wait10>", // Wait for successful router solicitation
+        "<enter><wait>",    // Accept DNS settings from DHCP
+
+        // Time Zone Selector
+        "a",             // Select UTC
+        "<enter><wait>", // Confirm time zone selection
+
+        // Time & Date
+        "<enter><wait>", // Skip Date
+        "<enter><wait>", // Skip Time
+
+        "<enter><wait>", // XXX
+
+        // System Configuration
+        "<enter><wait>", // Accept defaults (only ssh, dumpdev)
+
+        // System Hardening
+        "<down><down><down><down>R<spacebar><wait>", // Randomize PID
+        "<down>I<spacebar><wait>",                   // Insert stack guard
+        "<down>C<spacebar><wait>",                   // Clean /tmp
+        "<down><spacebar><wait>",                    // Disable syslogd network socket
+        "<down><spacebar><wait>",                    // Disable sendmail service
+        "<enter><wait>",                             // Accept hardening choices
+
+        // Add User Accounts
+        "Y<wait>",
+
+        // Create vagrant user
+        "{{user `vagrant_username`}}",       // Username
+        "<enter><wait>",
+        "Vagrant User",                      // Full Name
+        "<enter><wait>",
+        "<enter><wait>",                     // UID
+        "<enter><wait>",                     // Login Group
+        "wheel",                             // Auxiliary Group
+        "<enter><wait>",
+        "<enter><wait>",                     // Login Class
+        "sh",                                // Login shell
+        "<enter><wait>",
+        "/home/{{user `vagrant_username`}}", // Home Directory
+        "<enter><wait>",
+        "0700",                              // Home Directory mode
+        "<enter><wait>",
+        "Y",                                 // Use password based authentication
+        "<enter><wait>",
+        "N",                                 // Use empty password
+        "<enter><wait>",
+        "N",                                 // Use random password
+        "<enter><wait>",
+        "{{user `vagrant_password`}}",       // Enter password
+        "<enter><wait>",
+        "{{user `vagrant_password`}}",       // Re-enter password
+        "<enter><wait>",
+        "N",                                 // Lock account after create
+        "<enter><wait>",
+        "Y",                                 // Look reasonable
+        "<enter><wait>",
+        "N",                                 // Add another user
+        "<enter><wait>",
+
+        // System configuration
+        "<enter>", // Select Exit
+        "<wait10><wait10><wait10><wait10><wait10><wait10>", // Wait for disk to flush
+
+        // Manual Configuration
+        "<left>",  // Highlight Yes
+        "Y<wait>", // Select Yes
+
+        // Shell prompt
+        "sed -i -e 's/^#PermitRootLogin no/PermitRootLogin yes/' /etc/ssh/sshd_config<enter><wait>",
+        "echo 'autoboot_delay=\"{{user `autoboot_delay`}}\"' >> /boot/loader.conf<enter><wait>",
+        "echo 'if_vmx_load=\"YES\"' >> /boot/loader.conf<enter><wait>",
+        "chsh -s sh root<enter><wait>",
+        "exit<enter><wait>",
+
+        // Complete
+        "R", // Select Reboot
+        "<wait10><wait10><wait10><wait10><wait10>", // Wait for disk to flush
+      ],
+      boot_wait: "{{user `boot_wait`}}",
+      disk_size: "{{user `disk_size_mb`}}",
+      guest_os_type: "freebsd-64",
+      headless: "{{user `headless`}}",
+      iso_checksum: "{{user `iso_checksum`}}",
+      iso_checksum_type: "{{user `iso_checksum_type`}}",
+      iso_url: "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-{{user `iso_daterev`}}-disc1.iso",
+      shutdown_command: "poweroff; poweroff",
+      ssh_password: "{{user `vagrant_password`}}",
+      ssh_username: "root",
+      ssh_wait_timeout: "{{user `ssh_wait_timeout`}}",
+      vm_name: "FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-{{user `iso_daterev`}}",
+      vmx_data: {
+        "ethernet0.connectionType": "nat",
+        "ethernet0.linkStatePropagation.enable": "FALSE",
+        "ethernet0.pcislotnumber": "160",
+        "ethernet0.present": "TRUE",
+        "ethernet0.virtualDev": "vmxnet3",
+        "ethernet0.wakeOnPcktRcv": "FALSE",
+        // "firmware": "efi", // BROKEN(seanc@): https://github.com/brd/packer-freebsd/issues/23
+        "serial0.present": "{{user `vmware_serial_port_enabled`}}",
+        "serial0.fileType": "pipe",
+        "serial0.fileName": "/tmp/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-{{user `iso_daterev`}}.serial0",
+        "tools.syncTime": "FALSE",
+        "mce.enable": "{{user `vmware_hardware_acceleration`}}",
+        "vhu.enable": "{{user `vmware_hardware_acceleration`}}",
+        "vhv.enable": "{{user `vmware_hardware_acceleration`}}",
+        "vpmc.enable": "{{user `vmware_hardware_acceleration`}}",
+        "virtualHW.version": "{{user `vmware_hardware_version`}}"
+      }
+    },
+    {
+      type: "virtualbox-iso",
+      // NOTE: Synchronize the boot_command list with `vmware-iso`'s
+      // `boot_command` list.
+      boot_command: [
+        // Welcome.  Install.
+        "I<wait>",
+
+        // Keymap Selection
+        "<enter><wait>",
+
+        // Set Hostname
+        "{{user `hostname`}}",
+        "<enter><wait>",
+
+        // Distribution Select
+        "s<wait>",        // Enable src
+        "<up><spacebar>", // Disable lib32
+        "<enter><wait>",
+
+        // Partitioning
+        "<down><down><down>", // Highlight "Auto (ZFS)"
+        "<enter><wait>",
+
+        // ZFS Configuration
+        "<enter><wait>", // Select Install
+
+        // ZFS Configuration
+        "<enter><wait>", // Select `stripe`
+
+        // ZFS Configuration
+        "<spacebar><enter>", // Toggle `da0`
+
+        // ZFS Configuration
+        "<left>", // Highlight "Yes" to destroy data device
+        "Y",      // Activate "Yes"
+
+        // Wait for the installation to complete.  Increase the number of
+        // <wait10> operations as necessary to match the capabilities of the IO
+        // of the building machine.
+        "<wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10><wait10>",
+
+        // Password
+        "vagrant<enter><wait>", // Enter password for the root account
+        "vagrant<enter><wait>", // Re-enter the password for the root account
+
+        // Network Configuration
+        "<enter><wait>", // Select `vmx0`
+
+        // Network Configuration
+        "Y<wait>",          // Enable IPv4 configuration
+        "Y",                // Select DHCP
+        "<wait10><wait10>", // Wait to acquire a DHCP address
+        "Y<wait>",          // Enable IPv6 configuration
+        "Y",                // Select SLAAC
+        "<wait10><wait10>", // Wait for successful router solicitation
+        "<enter><wait>",    // Accept DNS settings from DHCP
+
+        // Time Zone Selector
+        "a",             // Select UTC
+        "<enter><wait>", // Confirm time zone selection
+
+        // Time & Date
+        "<enter><wait>", // Skip Date
+        "<enter><wait>", // Skip Time
+
+        "<enter><wait>", // XXX
+
+        // System Configuration
+        "<enter><wait>", // Accept defaults (only ssh, dumpdev)
+
+        // System Hardening
+        "<down><down><down><down>R<spacebar><wait>", // Randomize PID
+        "<down>I<spacebar><wait>",                   // Insert stack guard
+        "<down>C<spacebar><wait>",                   // Clean /tmp
+        "<down><spacebar><wait>",                    // Disable syslogd network socket
+        "<down><spacebar><wait>",                    // Disable sendmail service
+        "<enter><wait>",                             // Accept hardening choices
+
+        // Add User Accounts
+        "Y<wait>",
+
+        // Create vagrant user
+        "{{user `vagrant_username`}}",       // Username
+        "<enter><wait>",
+        "Vagrant User",                      // Full Name
+        "<enter><wait>",
+        "<enter><wait>",                     // UID
+        "<enter><wait>",                     // Login Group
+        "wheel",                             // Auxiliary Group
+        "<enter><wait>",
+        "<enter><wait>",                     // Login Class
+        "sh",                                // Login shell
+        "<enter><wait>",
+        "/home/{{user `vagrant_username`}}", // Home Directory
+        "<enter><wait>",
+        "0700",                              // Home Directory mode
+        "<enter><wait>",
+        "Y",                                 // Use password based authentication
+        "<enter><wait>",
+        "N",                                 // Use empty password
+        "<enter><wait>",
+        "N",                                 // Use random password
+        "<enter><wait>",
+        "{{user `vagrant_password`}}",       // Enter password
+        "<enter><wait>",
+        "{{user `vagrant_password`}}",       // Re-enter password
+        "<enter><wait>",
+        "N",                                 // Lock account after create
+        "<enter><wait>",
+        "Y",                                 // Look reasonable
+        "<enter><wait>",
+        "N",                                 // Add another user
+        "<enter><wait>",
+
+        // System configuration
+        "<enter>", // Select Exit
+        "<wait10><wait10><wait10><wait10><wait10><wait10>", // Wait for disk to flush
+
+        // Manual Configuration
+        "<left>",  // Highlight Yes
+        "Y<wait>", // Select Yes
+
+        // Shell prompt
+        "sed -i -e 's/^#PermitRootLogin no/PermitRootLogin yes/' /etc/ssh/sshd_config<enter><wait>",
+        "echo 'autoboot_delay=\"{{user `autoboot_delay`}}\"' >> /boot/loader.conf<enter><wait>",
+        "echo 'if_vmx_load=\"YES\"' >> /boot/loader.conf<enter><wait>",
+        "chsh -s sh root<enter><wait>",
+        "exit<enter><wait>",
+
+        // Complete
+        "R", // Select Reboot
+        "<wait10><wait10><wait10><wait10><wait10>", // Wait for disk to flush
+      ],
+      boot_wait: "{{user `boot_wait`}}",
+      disk_size: "{{user `disk_size_mb`}}",
+      format: "{{user `virtualbox_format`}}",
+      guest_additions_mode: "disable",
+      guest_os_type: "FreeBSD_64",
+      hard_drive_interface: "sata",
+      headless: "{{user `headless`}}",
+      iso_checksum: "{{user `iso_checksum`}}",
+      iso_checksum_type: "{{user `iso_checksum_type`}}",
+      iso_interface: "sata",
+      iso_url: "http://ftp.freebsd.org/pub/FreeBSD/snapshots/ISO-IMAGES/{{user `iso_version`}}/FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-{{user `arch`}}-{{user `iso_daterev`}}-disc1.iso",
+      shutdown_command: "poweroff; poweroff",
+      ssh_password: "{{user `vagrant_password`}}",
+      ssh_username: "root",
+      ssh_wait_timeout: "{{user `ssh_wait_timeout`}}",
+      vboxmanage: [
+        [
+          "modifyvm", "{{ .Name }}",
+          "--audio", "none",
+          "--cpus", "{{ user `hw_cpu_cores` }}",
+          "--memory", "{{ user `hw_ram_mb` }}",
+          "--nictype1", "virtio",
+          "--nictype2", "virtio"
+        ],
+        [
+          "storagectl", "{{ .Name }}",
+          "--name", "IDE Controller",
+          "--remove"
+        ]
+      ]
+    }
+  ],
+  provisioners: [
+    {
+      // See scripts/ for a list of available provisioner scripts.
+      scripts: [
+        "../scripts/zfs-setup.sh",
+        "../scripts/postinstall.sh",
+        "../scripts/zfsnap.sh",
+      ],
+      type: "shell"
+    }
+  ],
+  "post-processors": [
+    {
+      output: "FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-zfs-{{user `iso_daterev`}}-{{.Provider}}.box",
+      type: "vagrant",
+      compression_level: "{{user `compression_level`}}",
+      override: {
+        vmware: {
+          vagrantfile_template: "Vagrantfile"
+        },
+        virtualbox: {
+          vagrantfile_template: "Vagrantfile"
+        }
+      }
+    }
+  ],
+}

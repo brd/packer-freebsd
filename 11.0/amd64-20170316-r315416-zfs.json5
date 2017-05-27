@@ -3,6 +3,7 @@
     "autoboot_delay": "-1",
     "arch": "amd64",
     "boot_wait": "45s",
+    "compression_level": "9",
     "ssh_wait_timeout": "30s",
     "headless": "true",
     "hostname": "freebsd-vagrant",
@@ -224,6 +225,7 @@
     {
       "output": "FreeBSD-{{user `iso_version`}}-{{user `buildtag`}}-zfs-{{user `iso_daterev`}}-{{.Provider}}.box",
       "type": "vagrant",
+      "compression_level": "{{user `compression_level`}}",
       "override": {
         "vmware": {
           "vagrantfile_template": "./Vagrantfile.vmware"

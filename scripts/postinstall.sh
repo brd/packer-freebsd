@@ -23,13 +23,13 @@ echo 'Bootstrapping pkg(1)...'
 ASSUME_ALWAYS_YES=yes pkg bootstrap
 
 echo 'Update the pkg database...'
-pkg update
+sh -c 'cd /tmp && exec pkg update'
 
 echo 'Upgrade pkg database...'
-pkg upgrade -n
+sh -c 'cd /tmp && exec pkg upgrade -n'
 
 echo 'Initializing the pkg audit database...'
-pkg audit -F
+sh -c 'cd /tmp && exec pkg audit -F'
 
 echo 'Setting up VM Tools...'
 printf "Packer Builder Type: %s\n" "${PACKER_BUILDER_TYPE}"
@@ -37,9 +37,9 @@ if [ "$PACKER_BUILDER_TYPE" = 'vmware-iso' ]; then
 	pkg install -y open-vm-tools-nox11
 	sysrc vmware_guest_vmblock_enable=YES
 	sysrc vmware_guest_vmmemctl_enable=YES
+	sysrc vmware_guest_vmxnet_enable=YES
 
         # Disable vmxnet in favor of whatever the OpenVM Tools are suggesting
-	sysrc vmware_guest_vmxnet_enable=YES
         sed -i -e 's#^ifconfig_vmx0#ifconfig_em0#g' /etc/rc.conf
         sed -i -e '/^if_vmx_load=.*/d' /boot/loader.conf
 
@@ -53,17 +53,6 @@ elif [ "$PACKER_BUILDER_TYPE" = 'virtualbox-iso' ]; then
 else
 	echo 'Unknown type of VM, not installing tools...'
 fi
-
-# echo
-# echo 'Installing doas...'
-# pkg install -y doas
-# echo "permit nopass :wheel" >> /etc/doas.conf
-# cat <<'EOF' >> /etc/syslog.conf
-# #!doas
-# #*.*/var/log/doas
-# EOF
-# touch /var/log/doas
-# chmod 0600 /var/log/doas
 
 echo
 echo 'Setting up sudo...'
@@ -81,12 +70,18 @@ chown -R vagrant ~vagrant/.ssh
 chmod 0600 ~vagrant/.ssh/authorized_keys
 
 echo
-echo 'Changing roots shell back...'
-chsh -s tcsh root
+echo 'Disabing SSH root login...'
+sed -i -e 's/^PermitRootLogin no/#PermitRootLogin yes/' /etc/ssh/sshd_config
 
-# This causes a hang on shutdown that we cannot automatically recover from
-#echo 'Patching FreeBSD...'
-#freebsd-update fetch install > /dev/null
+echo
+echo 'Enabling NFS Client...'
+sysrc rpcbind_enable="YES"
+sysrc rpc_lockd_enable="YES"
+sysrc nfs_client_enable="YES"
+
+echo
+echo 'Installing lang/go...'
+pkg install -y lang/go devel/git
 
 echo
 echo 'Updating locate(1) database...'

@@ -1,0 +1,129 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+#
+# You can ask for more memory and cores when creating your Vagrant machine with
+# different environment variables:
+#
+# $ env VAGRANT_RAM_MB=2048 VAGRANT_CPU=2 vagrant up
+
+# The following environment variables are available to configure the VM when it
+# is provisioned:
+
+# ENABLE_NFS=0 to disable NFS.  Enabled by default.
+$enable_nfs = ENV['ENABLE_NFS'] || '1'
+
+# ENABLE_PROXY=0 to disable forwarding along {HT,F}TP_PROXY environment
+# variables.  Enabled by default.
+$enable_proxy = ENV['ENABLE_PROXY'] || '1'
+
+# ENABLE_SSH_AGENT=1 to enable forwarding the SSH Agent environment variables.
+# Disabled by default.
+$enable_ssh_agent = ENV['ENABLE_SSH_AGENT'] || '0'
+
+# ZFS root enabled so don't decrease this value too low.
+$ram_mb     = ENV['VAGRANT_RAM_MB'] || '1536'
+
+# Number of CPU cores
+$cpu        = ENV['VAGRANT_CPU'] || '4'
+
+# Directory inside of the guest to share betwen your host OS and the guest.
+$app_dir    = ENV['VAGRANT_APP_DIR'] || "/local"
+
+# Message to display once the VM has been spun up
+$post_up_message = <<MESSAGE
+Application directory: #{$app_dir}
+Num cores: #{$cpu}
+MB RAM: #{$ram_mb}
+MESSAGE
+
+# Configure the Provisioning Script.  The $provisioning_script provides this
+# Vagrant box with an update script to bring the box up to date when the box is
+# brought online via `vagrant up`.  It is very likely that a Vagrant box has
+# aged since it was last used and may need to update various bits.
+$provisioning_script = <<SCRIPT
+ASSUME_ALWAYS_YES=yes pkg bootstrap
+
+echo 'Update the pkg database...'
+sudo sh -c 'cd /tmp && pkg update'
+
+echo 'Upgrade pkg database...'
+sudo sh -c 'cd /tmp && pkg upgrade -n'
+
+echo 'Initializing the pkg audit database...'
+sudo sh -c 'cd /tmp && pkg audit -F'
+
+echo 'Upgrading out of date packages...'
+sudo sh -c 'cd /tmp && pkg upgrade'
+
+# Unconditionally remove $GOPATH/pkg every upgrade in order to prevent ABI
+# incompatibilities resulting from automatic upgrades from `lang/go`.
+GOBIN="`which 2>&1 /dev/null go | head -1`"
+if [ -n "${GOBIN}" ]; then
+   rm -rf "`${GOBIN} env GOPATH`/pkg"
+fi
+SCRIPT
+
+# Attempt to automatically detect the default provider
+if ENV.fetch('VAGRANT_DEFAULT_PROVIDER', '').empty?
+  case
+  when File.exists?('/Applications/VMware Fusion.app/Contents/MacOS/VMware Fusion')
+    ENV['VAGRANT_DEFAULT_PROVIDER'] = 'vmware_fusion'
+  when File.exists?('/usr/sbin/bhyve')
+    ENV['VAGRANT_DEFAULT_PROVIDER'] = 'bhyve'
+  when File.exists?('/Applications/VirtualBox.app/Contents/MacOS/VirtualBox') ||
+       File.exists?('/usr/local/bin/virtualbox') ||
+       File.exists?('/usr/bin/virtualbox')
+    ENV['VAGRANT_DEFAULT_PROVIDER'] = 'virtualbox'
+  end
+end
+
+VAGRANTFILE_API_VERSION = "2"
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.nfs.verify_installed = false
+  config.nfs.functional = ($enable_nfs.to_i == 0)
+
+  if $enable_proxy.to_i != 0
+    config.ssh.forward_env << "HTTP_PROXY=$http_proxy" if !ENV.fetch('HTTP_PROXY', '').empty?
+    config.ssh.forward_env << "FTP_PROXY=$ftp_proxy"   if !ENV.fetch('FTP_PROXY', '').empty?
+  end
+  config.ssh.forward_agent = $enable_ssh_agent.to_i != 0
+  config.ssh.keep_alive = true
+  config.ssh.shell = "/bin/sh"
+  config.ssh.sudo_command = 'sudo -E -H %c'
+
+  config.vm.guest = :freebsd
+
+  # The following line can be removed after Vagrant 1.9.4 has been released.
+  # See https://github.com/mitchellh/vagrant/issues/8395 for details.
+  config.vm.network "forwarded_port", guest: 22, host: 2222, host_ip: "127.0.0.1", id: 'ssh', auto_correct: true
+
+  config.vm.post_up_message = $post_up_message
+  config.vm.provision :shell, privileged: false, inline: $provisioning_script
+  config.vm.synced_folder ".", $app_dir, :id => "vagrant-root",
+                          nfs: true, type: "nfs", nfs_udp: false,
+                          mount_options: ['noatime'],
+                          freebsd__nfs_options: ['nolockd'], :disable_usable_check => true
+                          # nfs: true, nfs_udp: false, nfs_version: 3
+
+  config.vm.provider :virtualbox do |vb, override|
+    # Generate a random MAC
+    override.vm.base_mac = "0800" + Array.new(8){[*"A".."F", *"0".."9"].sample}.join
+    override.vm.network "private_network", type: "dhcp"
+
+    vb.cpus = $cpu.to_i
+    vb.memory = $ram_mb.to_i
+
+    vb.customize ["modifyvm", :id, "--audio", "none"]
+    vb.customize ["modifyvm", :id, "--hwvirtex", "on"]
+    if $cpu.to_i > 1
+      vb.customize ["modifyvm", :id, "--ioapic", "on"]
+    end
+    vb.customize ["modifyvm", :id, "--nictype1", "virtio"]
+    vb.customize ["modifyvm", :id, "--nictype2", "virtio"]
+  end
+
+  config.vm.provider :vmware_fusion do |vmw, override|
+    vmw.cpus = $cpu.to_i
+    vmw.memory = $ram_mb.to_i
+  end
+end
