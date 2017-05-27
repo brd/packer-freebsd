@@ -9,9 +9,15 @@ TARGET ?= vmware-iso
 default: help
 
 20170510-r318134-zfs: amd64-20170510-r318134-zfs.json ## Build FreeBSD-11.0-STABLE-zfs-20170510-r318134
-	$(MAKE) build TARGET=$(TARGET) EXTRA_OPTS="$(EXTRA_OPTS)" TEMPLATE=$<
+	$(MAKE) _build TARGET=$(TARGET) EXTRA_OPTS="$(EXTRA_OPTS)" TEMPLATE=$<
 
-build:
+cfgt:: ## Install cfgt
+	go get -u github.com/sean-/cfgt
+
+patch-vagrant-nfs:: ## Patch Vagrant to prevent checking if NFS works or not
+	sudo patch -p0 /opt/vagrant/embedded/gems/gems/vagrant-*/lib/vagrant/action/builtin/mixin_synced_folders.rb .vagrant-nfs.patch
+
+_build:
 	@if [ -z "$(TARGET)" ]; then \
 		printf "ERROR: specify a packer target. HINT: %s TARGET=<NAME>\n" "`basename $(MAKE)`"; \
 		exit 1; \
@@ -22,11 +28,7 @@ build:
 	fi
 	packer build -only=$(TARGET) -var boot_wait=35s $(EXTRA_OPTS) $(TEMPLATE)
 
-cfgt:: ## Install cfgt(1)
-	go get -u github.com/sean-/cfgt
-
 .PHONY: help
 help:
 	@echo "Valid targets:"
-@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
-
+	@grep -E '^[0-9a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "\033[36m%-15s\033[0m %s\n", $$1, $$2}'
