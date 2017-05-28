@@ -1,4 +1,3 @@
-/packer_cache
 packer_cache/
 Vagrantfile
 *.box
@@ -7,3 +6,8 @@ Vagrantfile
 *.json
 
 .DS_Store
+/.Python
+/bin
+include/python2.7
+lib/python2.7
+README.pdf

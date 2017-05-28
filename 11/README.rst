@@ -5,13 +5,11 @@ FreeBSD 11.X Packer Images
 ----
 
 ``FreeBSD-11.1-PRERELEASE-amd64-20170525-r318893``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Supported builders:
 
-- ``vmware_fusion``
-
-::
+- ``vmware_fusion``::
 
     $ cd 11/ # This directory
     $ make 11.1-20170519-zfs TARGET=vmware-iso # EXTRA_OPTS="-var headless=false -debug"
@@ -25,7 +23,7 @@ Supported builders:
     $ vagrant destroy
     $ vagrant box remove FreeBSD-11.1-PRERELEASE-zfs-20170525-r318893-vmware
 
-- ``virtualbox``
+- ``virtualbox``:
 
   Coming soon(tm).  It may just work.  Testers wanted.
 
@@ -38,9 +36,7 @@ Supported builders:
 
 Supported builders:
 
-- ``vmware_fusion``
-
-::
+- ``vmware_fusion``::
 
     $ cd 11/ # This directory
     $ make 11.0-20170510-zfs TARGET=vmware-iso # EXTRA_OPTS="-var headless=false -debug"
@@ -53,18 +49,6 @@ Supported builders:
     $ vagrant destroy
     $ vagrant box remove FreeBSD-11.0-STABLE-zfs-20170510-r318134-vmware
 
-- ``virtualbox``
+- ``virtualbox``:
 
   Coming soon(tm).  It may just work.  Testers wanted.
-
-
-Vagrant Notes
-^^^^^^^^^^^^^
-
-- Install sudo(8) command specs for NFS shared folders.  Type `make
-  install-nfs-mac`.
-
-- Vagrant NFS Shared Folders: There is a [bug in Vagrant that prevents NFS
-  shared folders from
-  working](https://github.com/mitchellh/vagrant/issues/8624).  Type `make
-  patch-vagrant` to apply a patch to workaround this bug.

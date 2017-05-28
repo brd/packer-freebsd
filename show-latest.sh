@@ -5,7 +5,7 @@
 set -eu
 
 ARCH=amd64
-ISO_VERSION=11.0
+ISO_VERSION=11.1
 
 if [ $# -gt 0 ]; then
     ISO_VERSION=$1
