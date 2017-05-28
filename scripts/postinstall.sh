@@ -23,18 +23,18 @@ echo 'Bootstrapping pkg(1)...'
 ASSUME_ALWAYS_YES=yes pkg bootstrap
 
 echo 'Update the pkg database...'
-sh -c 'cd /tmp && exec pkg update'
+sh -c 'cd /tmp && exec pkg-static update'
 
 echo 'Upgrade pkg database...'
-sh -c 'cd /tmp && exec pkg upgrade -n'
+sh -c 'cd /tmp && exec pkg-static upgrade -n'
 
 echo 'Initializing the pkg audit database...'
-sh -c 'cd /tmp && exec pkg audit -F'
+sh -c 'cd /tmp && exec pkg-static audit -F'
 
 echo 'Setting up VM Tools...'
 printf "Packer Builder Type: %s\n" "${PACKER_BUILDER_TYPE}"
 if [ "$PACKER_BUILDER_TYPE" = 'vmware-iso' ]; then
-	pkg install -y open-vm-tools-nox11
+	pkg-static install -y open-vm-tools-nox11
 	sysrc vmware_guest_vmblock_enable=YES
 	sysrc vmware_guest_vmmemctl_enable=YES
 	sysrc vmware_guest_vmxnet_enable=YES
@@ -45,7 +45,7 @@ if [ "$PACKER_BUILDER_TYPE" = 'vmware-iso' ]; then
 
 	sysrc vmware_guestd_enable=YES
 elif [ "$PACKER_BUILDER_TYPE" = 'virtualbox-iso' ]; then
-	pkg install -y virtualbox-ose-additions
+	pkg-static install -y virtualbox-ose-additions
 	sysrc ifconfig_em1="inet 10.6.66.42 netmask 255.255.255.0"
 	sysrc vboxguest_enable="YES"
         sysrc vboxservice_flags="--disable-timesync"
@@ -56,7 +56,7 @@ fi
 
 echo
 echo 'Setting up sudo...'
-pkg install -y sudo
+pkg-static install -y sudo
 echo 'vagrant ALL=(ALL) NOPASSWD: ALL' > /usr/local/etc/sudoers.d/vagrant
 
 echo
@@ -81,7 +81,7 @@ sysrc nfs_client_enable="YES"
 
 echo
 echo 'Installing lang/go...'
-pkg install -y lang/go devel/git
+pkg-static install -y lang/go devel/git
 
 echo
 echo 'Updating locate(1) database...'
