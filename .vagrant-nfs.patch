@@ -1,0 +1,11 @@
+--- /opt/vagrant/embedded/gems/gems/vagrant-1.9.5/lib/vagrant/action/builtin/mixin_synced_folders.rb.orig	2017-05-27 17:48:42.000000000 -0400
++++ /opt/vagrant/embedded/gems/gems/vagrant-1.9.5/lib/vagrant/action/builtin/mixin_synced_folders.rb	2017-05-27 16:51:03.000000000 -0400
+@@ -141,7 +141,7 @@
+                 if !impl_class[0].new.usable?(machine, true)
+                   # Verify that explicitly defined shared folder types are
+                   # actually usable.
+-                  raise Errors::SyncedFolderUnusable, type: data[:type].to_s
++                  #raise Errors::SyncedFolderUnusable, type: data[:type].to_s
+                 end
+               end
+             end
