@@ -8,7 +8,7 @@ TARGET ?= vmware-iso
 
 default: help
 
-20170510-r318134-zfs: amd64-20170510-r318134-zfs.json ## Build FreeBSD-11.0-STABLE-zfs-20170510-r318134
+20170510-zfs: amd64-20170510-zfs.json ## Build FreeBSD-11.0-STABLE-zfs-20170510-r318134
 	$(MAKE) _build TARGET=$(TARGET) EXTRA_OPTS="$(EXTRA_OPTS)" TEMPLATE=$<
 
 cfgt:: ## Install cfgt
