@@ -1,7 +1,9 @@
+/packer_cache
 packer_cache/
 Vagrantfile
 *.box
 .*.sw?
 .vagrant/
+*.json
 
 .DS_Store
