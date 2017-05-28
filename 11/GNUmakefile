@@ -22,7 +22,9 @@ install-nfs-mac:: ## Install the sudo command specs required for NFS shared fold
 		echo "ERROR: /etc/sudoers.d/vagrant already exists"; \
 		exit 1; \
 	fi
-	sudo install -m 0644 -o root -g wheel .sudo-vagrant-nfs /etc/sudoers.d/vagrant
+	@sudo visudo --strict -c
+	sudo sh -c 'install -m 0440 -o root -g wheel .sudo-vagrant-nfs /etc/sudoers.d/vagrant; visudo --strict -c || rm -f /etc/sudoers.d/vagrant;'
+	@sudo visudo --strict -c
 
 _build:
 	@if [ -z "$(TARGET)" ]; then \
