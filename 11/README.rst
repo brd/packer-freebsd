@@ -13,7 +13,7 @@ Supported builders:
 
 ::
 
-    $ cd 11.0/ # This directory
+    $ cd 11/ # This directory
     $ make 20170510-r318134-zfs TARGET=vmware-iso # EXTRA_OPTS="-var headless=false -debug"
     $ vagrant box add --name FreeBSD-11.0-STABLE-zfs-20170510-r318134-vmware --provider=vmware_desktop FreeBSD-11.0-STABLE-zfs-20170510-r318134-vmware.box
     $ cd ~/src/FreeBSD/my-work-dir # Must be in a different directory to run `vagrant init`
@@ -37,7 +37,7 @@ Supported builders:
 
 ::
 
-    $ cd 11.0/ # This directory
+    $ cd 11/ # This directory
     $ packer build -only=vmware-iso -var boot_wait=35s amd64-20170323-r315855-zfs.json
     $ vagrant box add --name FreeBSD-11.0-STABLE-zfs-20170323-r315855-vmware --provider=vmware_desktop FreeBSD-11.0-STABLE-zfs-20170323-r315855-vmware.box
     $ vagrant init FreeBSD-11.0-STABLE-zfs-20170323-r315855-vmware
@@ -60,7 +60,7 @@ Supported builders:
 
 ::
 
-    $ cd 11.0/ # This directory
+    $ cd 11/ # This directory
     $ packer build -only=vmware-iso -var boot_wait=35s amd64-20170316-r315416-zfs.json
     $ vagrant box add --name FreeBSD-11.0-STABLE-zfs-20170316-r315416-vmware --provider=vmware_desktop FreeBSD-11.0-STABLE-zfs-20170316-r315416-vmware.box
     $ vagrant init FreeBSD-11.0-STABLE-zfs-20170316-r315416-vmware
