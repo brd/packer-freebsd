@@ -1,2 +1,2 @@
 *.json
-packer_cache/
+/packer_cache
