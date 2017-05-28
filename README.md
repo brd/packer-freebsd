@@ -1,5 +1,15 @@
 # FreeBSD Packer Templates
 
+## Updated build targets available in 11/
+
+See [`11/`](https://github.com/brd/packer-freebsd/tree/master/11) for an
+updated
+[`README`](https://github.com/brd/packer-freebsd/blob/master/11/README.rst) with
+revised build procedures.
+
+
+## Existing Builds
+
 Creates FreeBSD images using official `disc1.iso` snapshot and release media.
 
 To see the latest ISO, run the `show-latest.sh` script.
