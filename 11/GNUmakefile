@@ -17,6 +17,13 @@ cfgt:: ## Install cfgt
 patch-vagrant:: ## Patch Vagrant to prevent checking if NFS works or not
 	sudo patch -p0 /opt/vagrant/embedded/gems/gems/vagrant-*/lib/vagrant/action/builtin/mixin_synced_folders.rb .vagrant-nfs.patch
 
+install-nfs-mac:: ## Install the sudo command specs required for NFS shared folders on macOS
+	@if [ -e /etc/sudoers.d/vagrant ]; then \
+		echo "ERROR: /etc/sudoers.d/vagrant already exists"; \
+		exit 1; \
+	fi
+	sudo install -m 0644 -o root -g wheel .sudo-vagrant-nfs /etc/sudoers.d/vagrant
+
 _build:
 	@if [ -z "$(TARGET)" ]; then \
 		printf "ERROR: specify a packer target. HINT: %s TARGET=<NAME>\n" "`basename $(MAKE)`"; \
