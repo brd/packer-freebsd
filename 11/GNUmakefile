@@ -14,7 +14,7 @@ default: help
 cfgt:: ## Install cfgt
 	go get -u github.com/sean-/cfgt
 
-patch-vagrant-nfs:: ## Patch Vagrant to prevent checking if NFS works or not
+patch-vagrant:: ## Patch Vagrant to prevent checking if NFS works or not
 	sudo patch -p0 /opt/vagrant/embedded/gems/gems/vagrant-*/lib/vagrant/action/builtin/mixin_synced_folders.rb .vagrant-nfs.patch
 
 _build:

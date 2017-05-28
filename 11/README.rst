@@ -76,6 +76,7 @@ Supported builders:
 
 Vagrant Notes
 ^^^^^^^^^^^^^
+
 There is a [bug in Vagrant that prevents NFS shared folders from
 working](https://github.com/mitchellh/vagrant/issues/8624).  Type `make
-patch-vagrant-nfs` to apply a patch to workaround this bug.
+patch-vagrant` to apply a patch to workaround this bug.
