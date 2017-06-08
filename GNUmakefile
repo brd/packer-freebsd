@@ -50,7 +50,7 @@ install-rst2pdf:: ## Install rst2pdf in a local virtualenv
 	@echo 'Run: `deactivate` to escape the virtualenv'
 
 clean:: ## Clean virtualenv
-	rm -rf .Python bin/ include/ lib/
+	rm -rf .Python bin/ include/ lib/ README.pdf
 
 patch-vagrant:: ## Patch Vagrant to prevent checking if NFS works or not
 	sudo patch -p0 /opt/vagrant/embedded/gems/gems/vagrant-*/lib/vagrant/action/builtin/mixin_synced_folders.rb .vagrant-nfs.patch
