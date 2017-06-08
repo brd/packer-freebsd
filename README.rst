@@ -24,6 +24,23 @@ To use this set of |packer|_ templates, the following prerequisites is required:
   b. |VMware Fusion|_ ``8.5.7`` or newer
   c. |VirtualBox|_
 
+.. important:: If you are using |VMware Fusion|_, |VMware Fusion|_ Pro is
+   *required* in order to have headless booting of FreeBSD images.  With VMware
+   Fusion Pro, a new setting will appear under ``Preferences`` -> ``Network`` ->
+   Uncheck the ``Require authentication to enter promiscuous mode`` box.
+
+   .. image:: doc/vmware-fusion.png
+
+   The alternative is to add the following to your ``Vagrantfile``::
+
+       Vagrant.configure("2") do |config|
+         # ...
+         config.vm.provider "vmware_fusion" do |v|
+           v.gui = true
+         end
+         # ...
+       end
+
 7. Install the ``sudo`` command aliases to enable NFS synced folders.  On
    ``macOS``::
 
@@ -104,9 +121,9 @@ Vagrant Notes
 
     vagrant init --minimal <box name>
 
-- Initialize Vagrant boxes using a specific ``provider``::
+- Initialize Vagrant boxes using a specific ``provider`` and clean up if there's a failure::
 
-    vagrant up --provider=vmware_fusion
+    vagrant up --provider=vmware_fusion --destroy-on-error
 
 - Start the Vagrant VM::
 
