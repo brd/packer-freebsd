@@ -1,6 +1,6 @@
 GMAKE=`which 2> /dev/null gmake make | grep -v ^no | head -n 1`
 GO?=go
-MAJOR_VERSIONS=12 11
+MAJOR_VERSIONS=12 11 10
 CFGT?=`go env GOPATH`/bin/cfgt
 PACKER?=`go env GOPATH`/bin/packer
 RST2PDF ?= rst2pdf
