@@ -24,14 +24,15 @@ To use this set of |packer|_ templates, the following prerequisites is required:
   b. |VMware Fusion|_ ``8.5.7`` or newer
   c. |VirtualBox|_
 
-.. important:: If you are using |VMware Fusion|_, |VMware Fusion|_ Pro is
-   *required* in order to have headless booting of FreeBSD images.  With VMware
-   Fusion Pro, a new setting will appear under ``Preferences`` -> ``Network`` ->
-   Uncheck the ``Require authentication to enter promiscuous mode`` box.
+  .. important:: If you are using |VMware Fusion|_, |VMware Fusion|_ Pro is
+     *required* in order to have headless booting of FreeBSD images.  With
+     VMware Fusion Pro, a new setting will appear under ``Preferences`` ->
+     ``Network`` -> Uncheck the ``Require authentication to enter promiscuous
+     mode`` box.
 
-   .. image:: doc/vmware-fusion.png
+     .. image:: doc/vmware-fusion.png
 
-   The alternative is to add the following to your ``Vagrantfile``::
+     The alternative is to add the following to your ``Vagrantfile``::
 
        Vagrant.configure("2") do |config|
          # ...
