@@ -31,13 +31,15 @@ To use this set of |packer|_ templates, the following prerequisites is required:
       mode`` box.
 
       .. image:: doc/vmware-fusion.png
+         :width: 640px
+         :align: center
 
       The alternative is to add the following to your ``Vagrantfile``::
 
         Vagrant.configure("2") do |config|
           # ...
           config.vm.provider "vmware_fusion" do |v|
-            v.gui = true
+           v.gui = true
           end
           # ...
         end

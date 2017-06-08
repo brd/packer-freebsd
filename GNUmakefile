@@ -3,6 +3,7 @@ GO?=go
 MAJOR_VERSIONS=12 11
 CFGT?=`go env GOPATH`/bin/cfgt
 PACKER?=`go env GOPATH`/bin/packer
+RST2PDF ?= rst2pdf
 
 default: help
 
@@ -37,10 +38,19 @@ install-nfs-mac:: ## Install the sudo command specs required for NFS shared fold
 	sudo sh -c 'install -m 0440 -o root -g wheel .sudo-vagrant-nfs /etc/sudoers.d/vagrant; visudo --strict -c || rm -f /etc/sudoers.d/vagrant;'
 	@sudo visudo --strict -c
 
+.SUFFIXES: .pdf .rst
+%.pdf: %.rst
+	$(RST2PDF) -o $@ $<
+
 install-rst2pdf:: ## Install rst2pdf in a local virtualenv
-	virtualenv .
-	source bin/activate || source bin/activate.csh
+	@virtualenv .                                  ; \
+	source bin/activate || source bin/activate.csh ; \
 	pip install rstcheck rst2pdf
+	@echo 'Run: `source bin/activate || source bin/activate.csh` to activate the virtualenv'
+	@echo 'Run: `deactivate` to escape the virtualenv'
+
+clean:: ## Clean virtualenv
+	rm -rf .Python bin/ include/ lib/
 
 patch-vagrant:: ## Patch Vagrant to prevent checking if NFS works or not
 	sudo patch -p0 /opt/vagrant/embedded/gems/gems/vagrant-*/lib/vagrant/action/builtin/mixin_synced_folders.rb .vagrant-nfs.patch
