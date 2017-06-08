@@ -20,7 +20,7 @@ images:: ## Display the list of available images
 
 install-packer:: ## Install a recent version of packer
 	${GO} get -d -u github.com/hashicorp/packer
-	cd $GOPATH/src/github.com/hashicorp/packer/
+	cd ${GOPATH}/src/github.com/hashicorp/packer/
 	mv Makefile GNUmakefile
 	${GMAKE} dev
 	mv GNUmakefile Makefile
