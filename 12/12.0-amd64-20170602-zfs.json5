@@ -1,3 +1,11 @@
+// This Packer Template requires JSON5 support in packer(1) or the cfgt(1)
+// utility.
+//
+// USAGE with unpatched packer: cfgt -i freebsd.json5 | packer build -
+// USAGE with patched packer: packer build freebsd.json5
+//
+// packer w/ JSON5 support: https://github.com/sean-/packer/tree/f-json5
+// cfgt: go get -u github.com/sean-/cfgt
 {
   variables: {
     autoboot_delay: "-1",
@@ -358,7 +366,7 @@
           "--remove"
         ]
       ]
-    }
+    },
   ],
   provisioners: [
     {
