@@ -23,7 +23,7 @@ Supported builders:
     $ vagrant destroy
     $ vagrant box remove FreeBSD-11.1-PRERELEASE-zfs-20170525-r318893-vmware
 
-- ``virtualbox``:
+- ``virtualbox``::
 
   Coming soon(tm).  It may just work.  Testers wanted.
 
@@ -49,6 +49,6 @@ Supported builders:
     $ vagrant destroy
     $ vagrant box remove FreeBSD-11.0-STABLE-zfs-20170510-r318134-vmware
 
-- ``virtualbox``:
+- ``virtualbox``::
 
   Coming soon(tm).  It may just work.  Testers wanted.
