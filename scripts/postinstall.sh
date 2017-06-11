@@ -45,7 +45,7 @@ if [ "$PACKER_BUILDER_TYPE" = 'vmware-iso' ]; then
 
 	sysrc vmware_guestd_enable=YES
 elif [ "$PACKER_BUILDER_TYPE" = 'virtualbox-iso' ]; then
-	pkg-static install -y virtualbox-ose-additions
+	pkg-static install -y virtualbox-ose-additions-nox11
 	sysrc ifconfig_em1="inet 10.6.66.42 netmask 255.255.255.0"
 	sysrc vboxguest_enable="YES"
         sysrc vboxservice_flags="--disable-timesync"
