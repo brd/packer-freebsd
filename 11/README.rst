@@ -4,6 +4,41 @@ FreeBSD 11.X Packer Images
 11.1
 ----
 
+``FreeBSD-11.1-BETA1-amd64``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Supported builders:
+
+- ``vmware_fusion``::
+
+    $ cd 11/ # This directory
+    $ make 11.1-BETA1-zfs PROVIDER=vmware-iso # EXTRA_OPTS="-var headless=false -debug"
+    $ vagrant box add --name FreeBSD-11.1-BETA1-zfs-vmware --provider=vmware_desktop FreeBSD-11.1-BETA1-zfs-vmware.box
+    $ cd ~/src/FreeBSD/my-work-dir # Must be in a different directory to run `vagrant init`
+    $ vagrant init -m FreeBSD-11.1-BETA1-zfs-vmware
+    $ vagrant init --output Vagrantfile.example FreeBSD-11.1-BETA1-zfs-vmware
+    $ vagrant up --provider=vmware_fusion --destroy-on-error
+    $ vagrant ssh
+    $ vagrant suspend
+    $ vagrant destroy
+    $ vagrant box remove FreeBSD-11.1-BETA1-zfs-vmware
+
+- ``virtualbox``::
+
+    $ cd 11/ # This directory
+    $ make 11.1-BETA1-zfs PROVIDER=virtualbox-iso # EXTRA_OPTS="-var headless=false -debug"
+    $ vagrant box add --name FreeBSD-11.1-BETA1-zfs-virtualbox --provider=virtualbox FreeBSD-11.1-BETA1-zfs-virtualbox.box
+    $ cd ~/src/FreeBSD/my-work-dir # Must be in a different directory to run `vagrant init`
+    $ vagrant init -m FreeBSD-11.1-BETA1-zfs-virtualbox
+    $ vagrant init --output Vagrantfile.example FreeBSD-11.1-BETA1-zfs-virtualbox
+    $ vagrant up --provider=virtualbox --destroy-on-error
+    $ vagrant ssh
+    $ vagrant suspend
+    $ vagrant destroy
+    $ vagrant box remove FreeBSD-11.1-BETA1-zfs-virtualbox
+
+
+
 ``FreeBSD-11.1-PRERELEASE-amd64-20170525-r318893``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 

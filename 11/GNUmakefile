@@ -7,6 +7,9 @@ default: help
 
 # Image Targets.  Sort newest images first.
 
+11.1-BETA1-zfs: 11.1-amd64-BETA1-zfs.json ## Build ZFS root FreeBSD-11.1-BETA1-amd64
+	@exec $(MAKE) _build PROVIDER=$(PROVIDER) EXTRA_OPTS="$(EXTRA_OPTS)" TEMPLATE=$<
+
 11.1-20170525-zfs: 11.1-amd64-20170525-zfs.json ## Build ZFS root FreeBSD-11.1-PRERELEASE-amd64-20170525-r318893
 	@exec $(MAKE) _build PROVIDER=$(PROVIDER) EXTRA_OPTS="$(EXTRA_OPTS)" TEMPLATE=$<
 
