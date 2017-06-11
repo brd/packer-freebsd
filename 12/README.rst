@@ -31,7 +31,7 @@ Supported builders:
     $ cd ~/src/FreeBSD/my-work-dir # Must be in a different directory to run `vagrant init`
     $ vagrant init -m FreeBSD-12.0-CURRENT-zfs-20170602-r319481-virtualbox
     $ vagrant init --output Vagrantfile.example FreeBSD-12.0-CURRENT-zfs-20170602-r319481-virtualbox
-    $ vagrant up --provider=virtualbox
+    $ vagrant up --provider=virtualbox --destroy-on-error
     $ vagrant ssh
     $ vagrant suspend
     $ vagrant destroy
@@ -64,7 +64,7 @@ Supported builders:
     $ cd ~/src/FreeBSD/my-work-dir # Must be in a different directory to run `vagrant init`
     $ vagrant init -m FreeBSD-12.0-CURRENT-zfs-20170526-r318945-virtualbox
     $ vagrant init --output Vagrantfile.example FreeBSD-12.0-CURRENT-zfs-20170526-r318945-virtualbox
-    $ vagrant up --provider=virtualbox
+    $ vagrant up --provider=virtualbox --destroy-on-error
     $ vagrant ssh
     $ vagrant suspend
     $ vagrant destroy

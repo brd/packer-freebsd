@@ -17,7 +17,7 @@ Supported builders:
     $ cd ~/src/FreeBSD/my-work-dir # Must be in a different directory to run `vagrant init`
     $ vagrant init -m FreeBSD-11.1-PRERELEASE-zfs-20170525-r318893-vmware
     $ vagrant init --output Vagrantfile.example FreeBSD-11.1-PRERELEASE-zfs-20170525-r318893-vmware
-    $ vagrant up --provider=vmware_fusion
+    $ vagrant up --provider=vmware_fusion --destroy-on-error
     $ vagrant ssh
     $ vagrant suspend
     $ vagrant destroy
@@ -43,7 +43,7 @@ Supported builders:
     $ vagrant box add --name FreeBSD-11.0-STABLE-zfs-20170510-r318134-vmware --provider=vmware_desktop FreeBSD-11.0-STABLE-zfs-20170510-r318134-vmware.box
     $ cd ~/src/FreeBSD/my-work-dir # Must be in a different directory to run `vagrant init`
     $ vagrant init FreeBSD-11.0-STABLE-zfs-20170510-r318134-vmware
-    $ vagrant up --provider=vmware_fusion
+    $ vagrant up --provider=vmware_fusion --destroy-on-error
     $ vagrant ssh
     $ vagrant suspend
     $ vagrant destroy
